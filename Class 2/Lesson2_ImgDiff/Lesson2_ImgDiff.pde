@@ -2,16 +2,19 @@ import controlP5.*;
 
 ControlP5 debugUI;     //object that will create and manage our UI for changing things on the fly
 
-PImage imgBefore;
-PImage imgAfter;
-PImage imgDiff;
+//all image to be used imgDiff will be a created image from the two photos
+PImage   imgBefore;
+PImage   imgAfter;
+PImage   imgDiff;
 
-int alphaBefore = 0;
-int alphaAfter = 0;
-int alphaDiff = 0;
+//variables to hold alpha for each image layer. We can control
+int      alphaBefore = 0;
+int      alphaAfter = 0;
+int      alphaDiff = 0;
 
-int tolerance = 0;
-boolean threshold = true;
+//wamt to hold cont variables that tell us size of images so we
+int      threshold = 0;
+boolean  thresholdOn = true;
 
 static final int IMAGE_WIDTH = 398;
 static final int IMAGE_HEIGHT = 600;
@@ -29,19 +32,24 @@ void setup() {
   debugUI = new ControlP5(this);    //initializing UI
   
   debugUI.addSlider("alphaBefore")   // before slider
-    .setPosition( 10, height-70 )
+    .setPosition( 10, height-30 )
     .setSize( 100, 20 )
     .setRange( 0, 100);
     
   debugUI.addSlider("alphaAfter")     // after slider
-    .setPosition( 10, height-100 )
+    .setPosition( 10, height-60 )
     .setSize( 100, 20 )
     .setRange( 0, 100);  
   
   debugUI.addSlider("alphaDiff")     // after slider
-    .setPosition( 10, height-120 )
+    .setPosition( 10, height-90 )
     .setSize( 100, 20 )
     .setRange( 0, 100);  
+    
+  debugUI.addSlider("threshold")     // after slider
+    .setPosition( 10, height-120 )
+    .setSize( 100, 20 )
+    .setRange( 0, 100);    
 
 }
 
@@ -70,8 +78,8 @@ void draw() {
    
    imgDiff.pixels[i] = color( (int)grayDiff, (int)grayDiff, (int)grayDiff ); 
    
-   if(threshold){
-     if(grayDiff < tolerance){
+   if(thresholdOn){
+     if(grayDiff < threshold){
         imgDiff.pixels[i] = color(0, 0, 0); 
      }
    }
